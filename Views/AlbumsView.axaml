@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="using:SunBoyMusicStore.ViewModels"
+        xmlns:m="using:SunBoyMusicStore.Models"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:base="clr-namespace:SunBoyMusicStore.Models.Base"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SunBoyMusicStore.Views.AlbumsView"
+        x:DataType="vm:AlbumsViewModel"
+        Title="Альбомы">
+        <Window.Resources>
+                <base:MultiAttributeConverter x:Key="AttributeConverter"></base:MultiAttributeConverter>
+                <base:DateTimeOffsetConverter x:Key="DateTimeConverter"></base:DateTimeOffsetConverter>
+                <base:ComboboxConverter x:Key="ComboboxConverter"></base:ComboboxConverter>
+        </Window.Resources>
+        <StackPanel>
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel>
+                                <Label Content="Имя" HorizontalAlignment="Left" Padding="10,0,0,0"></Label>
+                                <TextBox Name="NameBox" Width="200" Margin="10"></TextBox>
+                        </StackPanel>
+                        <StackPanel>
+                                <Label Content="Жанр" HorizontalAlignment="Left" Padding="10,0,0,0"></Label>
+                                <TextBox Name="GenreBox" Width="200" Margin="10"></TextBox>
+                        </StackPanel>
+                        <Button Name="SearchButton" Command="{Binding SearchCommand}" Margin="0,15,0,0">
+                                <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource AttributeConverter}" ConverterParameter=",">
+                                                <Binding ElementName="NameBox" Path="Text" />
+                                                <Binding ElementName="GenreBox" Path="Text" />
+                                        </MultiBinding>
+                                </Button.CommandParameter>
+                                Поиск
+                        </Button>
+                </StackPanel>
+                <DataGrid Name="EntityGrid" VerticalAlignment="Stretch" MinHeight="300" AutoGenerateColumns="False" ItemsSource="{Binding Data}">
+                        <DataGrid.Columns>
+                                <DataGridTextColumn Header="Название" Binding="{Binding Name}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Артист" Binding="{Binding Artist.Name}"></DataGridTextColumn>
+                                <DataGridCheckBoxColumn Header="Дата публикации" Binding="{Binding PublishDate}"></DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                        <MenuItem Header="Удолить" Command="{Binding RemoveCommand}" CommandParameter="{Binding #EntityGrid.SelectedIndex }"></MenuItem>
+                                </ContextMenu>
+                        </DataGrid.ContextMenu>
+                </DataGrid>
+                <Label Content="Добавить новый альбом"></Label>
+                <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="10">
+                                <Label Content="Название"></Label>
+                                <TextBox Name="NewNameBox"></TextBox>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                                <Label Content="Артист"></Label>
+                                <ComboBox Name="NewArtistBox" ItemsSource="{Binding Source={x:Static base:DataManager.Artists}}">
+                                        <ComboBox.ItemTemplate>
+                                                <DataTemplate DataType="m:Artist">
+                                                        <TextBlock Text="{Binding Name}"></TextBlock>
+                                                </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                </ComboBox>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                                <Label Content="Дата публикации"></Label>
+                                <DatePicker Name="NewPublishPicker"></DatePicker>
+                        </StackPanel>
+                        <Button Margin="10" Command="{Binding AddCommand}">
+                                <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource AttributeConverter}">
+                                                <Binding ElementName="NewNameBox" Path="Text"></Binding>
+                                                <Binding ElementName="NewArtistBox" Converter="{StaticResource ComboboxConverter}" Path="SelectedItem"></Binding>
+                                                <Binding ElementName="NewPublishPicker" Converter="{StaticResource DateTimeConverter}" Path="SelectedDate"></Binding>
+                                        </MultiBinding>
+                                </Button.CommandParameter>
+                                Добавить
+                        </Button>
+                </StackPanel>
+        </StackPanel>
+</Window>

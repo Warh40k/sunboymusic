@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="using:SunBoyMusicStore.ViewModels"
+        xmlns:m="using:SunBoyMusicStore.Models"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:base="clr-namespace:SunBoyMusicStore.Models.Base"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SunBoyMusicStore.Views.CompilationsView"
+        x:DataType="vm:CompilationsViewModel"
+        Title="Сборники">
+        <Window.Resources>
+                <base:MultiAttributeConverter x:Key="MultiAttributeConverter"></base:MultiAttributeConverter>
+                <base:ComboboxConverter x:Key="ComboboxConverter"></base:ComboboxConverter>
+                <base:AttributeConverter x:Key="AttributeConverter"></base:AttributeConverter>
+        </Window.Resources>
+        <StackPanel>
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel>
+                                <Label Content="Имя" HorizontalAlignment="Left" Padding="10,0,0,0"></Label>
+                                <TextBox Name="NameBox" Width="200" Margin="10"></TextBox>
+                        </StackPanel>
+                        <StackPanel>
+                                <Label Content="Жанр" HorizontalAlignment="Left" Padding="10,0,0,0"></Label>
+                                <TextBox Name="GenreBox" Width="200" Margin="10"></TextBox>
+                        </StackPanel>
+                        <Button Name="SearchButton" Command="{Binding SearchCommand}" Margin="0,15,0,0">
+                                <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource MultiAttributeConverter}" ConverterParameter=",">
+                                                <Binding ElementName="NameBox" Path="Text" />
+                                                <Binding ElementName="GenreBox" Path="Text" />
+                                        </MultiBinding>
+                                </Button.CommandParameter>
+                                Поиск
+                        </Button>
+                </StackPanel>
+                <DataGrid Name="EntityGrid" VerticalAlignment="Stretch" MinHeight="300" AutoGenerateColumns="False" ItemsSource="{Binding Data}">
+                        <DataGrid.Columns>
+                                <DataGridTextColumn Header="Название" Binding="{Binding Name}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Описание" Binding="{Binding Description}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                        <MenuItem Header="Удолить" Command="{Binding RemoveCommand}" CommandParameter="{Binding #EntityGrid.SelectedIndex }"></MenuItem>
+                                </ContextMenu>
+                        </DataGrid.ContextMenu>
+                </DataGrid>
+                <Label Content="Добавить новый сборник"></Label>
+                <StackPanel Orientation="Horizontal">
+                        <StackPanel Margin="10">
+                                <Label Content="Имя"></Label>
+                                <TextBox Name="NewNameBox"></TextBox>
+                        </StackPanel>
+                        <StackPanel Margin="10">
+                                <Label Content="Описание"></Label>
+                                <TextBox Name="NewDescriptionBox"></TextBox>
+                        </StackPanel>
+                        <Button Margin="10" Command="{Binding AddCommand}">
+                                <Button.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource MultiAttributeConverter}">
+                                                <Binding ElementName="NewNameBox" Path="Text"></Binding>
+                                                <Binding ElementName="NewDescriptionBox" Path="Text"></Binding>
+                                        </MultiBinding>
+                                </Button.CommandParameter>
+                                Add
+                        </Button>
+                </StackPanel>
+        </StackPanel>
+</Window>
