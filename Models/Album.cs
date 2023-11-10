@@ -6,10 +6,10 @@ namespace SunBoyMusicStore.Models;
 
 public class Album: Attribute
 {
-    public DateTime PublishDate { get; set; }
+    public DateTimeOffset PublishDate { get; set; }
     public Artist Artist { get; set; }
 
-    public Album(string name, Artist artist, DateTime publishDate)
+    public Album(string name, Artist artist, DateTimeOffset publishDate)
     {
         Name = name;
         Artist = artist;

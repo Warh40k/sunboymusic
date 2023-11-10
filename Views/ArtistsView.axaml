@@ -11,7 +11,6 @@
         Title="Исполнители">
         <Window.Resources>
                 <base:MultiAttributeConverter x:Key="MultiAttributeConverter"></base:MultiAttributeConverter>
-                <base:ComboboxConverter x:Key="ComboboxConverter"></base:ComboboxConverter>
                 <base:AttributeConverter x:Key="AttributeConverter"></base:AttributeConverter>
         </Window.Resources>
         <StackPanel>

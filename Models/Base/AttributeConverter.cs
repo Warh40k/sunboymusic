@@ -14,8 +14,10 @@ public class AttributeConverter: IValueConverter
         {
             "Genre" => typeof(Genre),
             "Album" => typeof(Album),
+            "Artist" => typeof(Artist),
             "Int" => typeof(Int32),
             "TimeSpan" => typeof(TimeSpan),
+            "DateTime" => typeof(DateTime),
             _ => typeof(String)
         };
 
