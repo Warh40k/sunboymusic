@@ -5,10 +5,11 @@ namespace SunBoyMusicStore.Models;
 
 public class Artist: Attribute
 {
-    public Artist(string name, Genre genre)
+    public Artist(string name, Genre genre, int age)
     {
         Name = name;
         Genre = genre;
+        Age = age;
     }
 
     public Genre Genre { get; }

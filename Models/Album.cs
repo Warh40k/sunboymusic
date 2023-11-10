@@ -4,7 +4,7 @@ using Attribute = SunBoyMusicStore.Models.Base.Attribute;
 
 namespace SunBoyMusicStore.Models;
 
-public class Album: Base.Attribute
+public class Album: Attribute
 {
     public DateTime PublishDate { get; set; }
     public Artist Artist { get; set; }

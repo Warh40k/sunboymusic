@@ -14,8 +14,6 @@ public sealed class GenresViewModel: EntityViewModel<Genre>
     public GenresViewModel()
     {
         Repository = DataManager.Genres;
-        Repository.Add(new Genre("hip-hop"));
-        Repository.Add(new Genre("hop-hlop"));
         _output_data = new ObservableCollection<Genre>(Repository);
         SearchCommand = ReactiveCommand.Create<List<object?>>(Search);
         AddCommand = ReactiveCommand.Create<List<object?>>(Add);

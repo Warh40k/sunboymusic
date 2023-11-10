@@ -21,14 +21,11 @@ public sealed class AlbumsViewModel: EntityViewModel<Album>
         AddCommand = ReactiveCommand.Create<List<object?>>(Add);
         RemoveCommand = ReactiveCommand.Create<int>(Remove);
     }
+
     protected override void Add(List<object?> vals)
     {
         if (vals[0] != null && vals[1] != null)
         {
-            Repository.Add(new Album(
-                vals[0].ToString(),
-                new Artist("Berba", new Genre("lol")),
-                DateTime.Now));
             Data = new ObservableCollection<Album>(Repository);
         }
     }

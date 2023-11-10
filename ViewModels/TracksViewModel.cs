@@ -23,12 +23,13 @@ public sealed class TracksViewModel: EntityViewModel<Track>
 
     protected override void Search(List<object?> values)
     {
-        var selected = Repository.Where(track => track.Name.Contains(values[0].ToString()) && track.Album.Equals((Album)values[1])); 
+        var selected = Repository.Where(track => track.Name.Contains((string?)values[0] ?? "") && track.Album.Name.Contains((string?)values[1]  ?? "")); 
         Data = new ObservableCollection<Track>(selected);
     }
 
     protected override void Add(List<object?> vals)
     {
-        throw new NotImplementedException();
+        Repository.Add(new Track((string)vals[0], (Album)vals[1], (TimeSpan)vals[2], (bool)vals[3]!));
+        Data = new ObservableCollection<Track>(Repository);
     }
 }

@@ -15,7 +15,7 @@ public class Track: Base.Attribute
     {
         Album = album;
         Name = name;
-        length = length;
+        Length = length;
         Explicit = expl;
     }
 

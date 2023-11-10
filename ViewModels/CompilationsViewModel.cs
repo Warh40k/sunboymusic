@@ -14,7 +14,6 @@ public sealed class CompilationsViewModel: EntityViewModel<Compilation>
     public CompilationsViewModel()
     {
         Repository = DataManager.Compilations;
-        Repository.Add(new Compilation("Дискотека 90-ых", "Весело как в последний раз в жизни"));
         _output_data = new ObservableCollection<Compilation>(Repository);
         SearchCommand = ReactiveCommand.Create<List<object?>>(Search);
         AddCommand = ReactiveCommand.Create<List<object?>>(Add);
